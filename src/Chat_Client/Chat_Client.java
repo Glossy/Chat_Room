@@ -1,6 +1,8 @@
 package Chat_Client;
 
+import Chat_Client.MessageProtocol.MsgHead;
 import Chat_Client.MessageProtocol.MsgHeadWriter;
+import Chat_Client.MessageProtocol.MsgParser;
 import Chat_Client.MessageProtocol.MsgRegister;
 import Chat_Client.UI.LoginUI.LoginUI;
 
@@ -92,6 +94,10 @@ public class Chat_Client extends Thread{
 
             // 接收服务器的反馈信息
             byte[] data = receiveMessage();
+
+            // 将数组转换为类
+            MsgHead recMsg = MsgParser.parseMsg(data);
+
         }catch (IOException e){
             e.printStackTrace();
         }
