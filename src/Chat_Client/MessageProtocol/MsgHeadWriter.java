@@ -51,14 +51,14 @@ public class MsgHeadWriter {
             MsgLoginResponse msgLoginResponse = (MsgLoginResponse)msg;
             dos.write(msgLoginResponse.getState());
         }else if(msgType == 0x03){
-            MsgGroupList
+           // MsgGroupList
 
         }else if(msgType == 0x04){
-            MsgChatText
+            //MsgChatText
         }else if(msgType == 0x05){
-            MsgAddFriend
+            //MsgAddFriend
         }else if(msgType == 0x55){
-            MsgAddFriendResponse
+            //MsgAddFriendResponse
         }
         dos.flush();
         byte[] data = bous.toByteArray();

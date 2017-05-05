@@ -91,4 +91,5 @@ public class LoginAction implements ActionListener {
         this.is_Registering = is_Registering;
     }
 
+    public static void setLoginJF(JFrame j){this.LoginJF = j;}
 }

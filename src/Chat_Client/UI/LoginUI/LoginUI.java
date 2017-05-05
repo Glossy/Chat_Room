@@ -39,7 +39,7 @@ public class LoginUI extends JFrame{
         addMouseMotionListener(new MouseMotionAdapter() {
             @Override
             public void mouseDragged(MouseEvent e) {
-                while (isDragged){
+                if(isDragged){
                     int x = getLocation().x;
                     int y = getLocation().y;
                     //窗口新的坐标位置  = 移动前坐标位置+（鼠标指针当前坐标-鼠标按下时指针的位置）
@@ -133,6 +133,8 @@ public class LoginUI extends JFrame{
         label.setFont(new Font("Microsoft JhengHei Light", Font.PLAIN, 20));
         label.setBounds(37, 20, 165, 35);
         contentPane.add(label);
+
+        setVisible(true);
 
         //利用ChatClient连接服务器
         Chat_Client chat_client = new Chat_Client("localhost", 9090);
