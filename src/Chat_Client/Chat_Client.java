@@ -1,8 +1,7 @@
 package Chat_Client;
 
 import Chat_Client.MessageProtocol.*;
-import Chat_Client.UI.CustomizedUI.Customized_JOptionPane;
-import Chat_Client.UI.LoginUI.LoginUI;
+import Chat_Client.UI.CustomizedUI.CustomizedJOptionPane;
 
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -43,7 +42,7 @@ public class Chat_Client extends Thread{
             }catch (IOException e){
                 e.printStackTrace();
                 System.out.println("脱离主进程与服务器断开连接");
-                new Customized_JOptionPane( "ERROR", "与服务器断开连接");
+                new CustomizedJOptionPane( "ERROR", "与服务器断开连接");
                 System.exit(0);
             }
         }

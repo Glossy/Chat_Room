@@ -13,6 +13,7 @@ import java.awt.event.*;
 
 /**
  * Created by Wu on 2017/5/3.
+ * 此类为注册界面
  */
 public class RegisterUI extends JFrame{
     private int xx, yy;

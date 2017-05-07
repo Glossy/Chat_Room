@@ -1,7 +1,6 @@
 package Chat_Client.UI.CustomizedUI;
 
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -11,7 +10,7 @@ import java.awt.event.MouseEvent;
  */
 public class ExitButton extends JButton {
     public ExitButton(){
-        setUI(new customizedButtonUI());    //设置自定义UI
+        setUI(new CustomizedButtonUI());    //设置自定义UI
         setPreferredSize(new Dimension(40,30));//封装了构建高度和宽度的类
         setBackground(Color.DARK_GRAY);
         this.setText("×");
@@ -46,16 +45,4 @@ public class ExitButton extends JButton {
         });
     }
     private boolean isExit = true;
-}
-/**
- * 自定义一个重写过ButtonPress状态的UI类
- * 为了按钮在按压时能显示非默认的浅红色
- */
-class customizedButtonUI extends BasicButtonUI {
-    @Override
-    public void paintButtonPressed(Graphics g, AbstractButton b){
-        g.setColor(new Color(240, 128, 128));//浅红
-        g.fillRect(0, 0, b.getWidth(), b.getHeight());//用制定画刷填充矩阵
-    }
-
 }

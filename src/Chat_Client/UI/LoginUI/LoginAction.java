@@ -4,10 +4,12 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import Chat_Client.Chat_Client;
+import Chat_Client.DataBase.FigureProperty;
 import Chat_Client.UI.RegisterUI.RegisterUI;
 
 /**
  * Created by Wu on 2017/5/2.
+ * 用于监听登录界面
  */
 public class LoginAction implements ActionListener {
     private JTextField userid_field;// Login界面的ID号
@@ -18,7 +20,6 @@ public class LoginAction implements ActionListener {
 
     /**
      * Invoked when an action occurs.
-     *
      * @param e
      */
     @Override
@@ -38,7 +39,7 @@ public class LoginAction implements ActionListener {
                 else {
                     int result = chat_client.Login(user_id, password);
                     if (result == 0) {//若密码正确
-                        Figures.cc = chat_client;
+                        FigureProperty.cc = chat_client;
                         new FriendListUI();
                         LoginJF.dispose();
                     } else if (result == 1) {//若密码错误

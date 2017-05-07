@@ -13,9 +13,9 @@ public class UserInfo {
     //好友信息
     private byte listCount;// 保存有多少组好友
     private String ListName[];// 保存每个分组的名称
-    private byte[] bodyCount;// 每组有多少个人
-    private int bodyNum[][];// 每个好友的ID号
-    private int bodypic[][];//好友头像
+    private byte[] friendCount;// 每组有多少个人
+    private int [][] friendID;// 每个好友的ID号
+    private int friendPic[][];//好友头像
     private String friendNickName[][];// 每个好友的昵称
 
     //群组信息 getter 和 setter 还没写
@@ -33,14 +33,14 @@ public class UserInfo {
     public String[] getListName() {return ListName;}
     public void setListName(String[] listName) {ListName = listName;}
 
-    public byte[] getBodyCount() {return bodyCount;}
-    public void setBodyCount(byte[] bodyCount) {this.bodyCount = bodyCount;}
+    public byte[] getFriendCount() {return friendCount;}
+    public void setFriendCount(byte[] bodyCount) {this.friendCount = bodyCount;}
 
-    public int[][] getBodyNum() {return bodyNum;}
-    public void setBodyNum(int[][] bodyNum) {this.bodyNum = bodyNum;}
+    public int[][] getFriendID() {return friendID;}
+    public void setFriendID(int[][] bodyNum) {this.friendID = bodyNum;}
 
     public String[][] getFriendNickName() {return friendNickName;}
-    public void setFriendNikeName(String[][] nikeName) {this.friendNickName = nikeName;}
+    public void setFriendNickName(String[][] nickName) {this.friendNickName = nickName;}
 
     public int getIDNum() {return IDNum;}
     public void setIDNum(int IDNum) {this.IDNum = IDNum;}
@@ -54,8 +54,8 @@ public class UserInfo {
     public int getPic() {return Picture;}
     public void setPic(int pic) {Picture = pic;}
 
-    public int[][] getBodypic() {return bodypic;}
-    public void setBodypic(int bodypic[][]) {this.bodypic = bodypic;}
+    public int[][] getFriendPic() {return friendPic;}
+    public void setFriendPic(int bodypic[][]) {this.friendPic = bodypic;}
 
     public boolean equals(UserInfo compare) {
         if (compare.getIDNum() == IDNum && compare.getPassWord().equals(PassWord)) {

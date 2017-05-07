@@ -8,8 +8,8 @@ import java.awt.event.*;
 /**
  * Created by Wu on 2017/5/2.
  */
-public class Customized_JOptionPane extends JDialog {
-    public Customized_JOptionPane(String title, String content){
+public class CustomizedJOptionPane extends JDialog {
+    public CustomizedJOptionPane(String title, String content){
         setUndecorated(true);
         //拖动操作
         addMouseListener(new MouseAdapter() {
@@ -58,6 +58,7 @@ public class Customized_JOptionPane extends JDialog {
         textArea.setBounds(20, 50, 410 , 70);
         textArea.setWrapStyleWord(true);
         textArea.setText(content);
+        textArea.setEditable(false);
         contentPane.add(textArea);
 
         confirmButton = new UniversalButton("Confirm");
