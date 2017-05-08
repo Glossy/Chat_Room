@@ -71,7 +71,7 @@ public class CustomizedJOptionPane extends JDialog {
         confirmButton.setBounds(180,this.getHeight() - 50,90,30);
         contentPane.add(confirmButton);
 
-        closeButton = new CloseButton();
+        closeButton = new CloseButton(this);
         closeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 dispose();

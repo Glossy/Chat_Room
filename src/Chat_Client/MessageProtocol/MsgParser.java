@@ -71,21 +71,86 @@ public class MsgParser {
             return msgLogin;
         }else if(msgType == 0x22){// 如果是登陆返回信息
             byte state = dataInputStream.readByte();
-            MsgRegisterResponse msgRegisterResponse = new MsgRegisterResponse();
-            msgRegisterResponse.setType(msgType);
-            msgRegisterResponse.setSource(source);
-            msgRegisterResponse.setDestination(destination);
-            msgRegisterResponse.setTotalLength(totalLength);
-            msgRegisterResponse.setState(state);
-            return msgRegisterResponse;
+            MsgLoginResponse msgLoginResponse = new MsgLoginResponse();
+            msgLoginResponse.setType(msgType);
+            msgLoginResponse.setSource(source);
+            msgLoginResponse.setDestination(destination);
+            msgLoginResponse.setTotalLength(totalLength);
+            msgLoginResponse.setState(state);
+            return msgLoginResponse;
         }else if(msgType == 0x03){ // 如果是好友列表
             int i, j;
             String username = readString(dataInputStream, 10);
             int pic = dataInputStream.readInt();
+            byte listCount = dataInputStream.readByte();// 读取好友分组个数
+            String listName[] = new String[listCount];
+            byte friendCount[] = new byte[listCount];//每组好友数
+
+            int friendID[][];
+            friendID = new int[listCount][];// 设置第一维长度
+
+            int friendPic[][];
+            friendPic = new int[listCount][];
+
+            String nickName[][];
+            nickName = new String[listCount][];
+
+            byte friendState[][];
+            friendState = new byte[listCount][];
+
+            for (i = 0; i < listCount; i++) {
+                listName[i] = readString(dataInputStream, 10);
+                friendCount[i] = dataInputStream.readByte();
+
+                friendID[i] = new int[friendCount[i]];// 设置第二维长度
+                friendPic[i] = new int[friendCount[i]];
+                nickName[i] = new String[friendCount[i]];
+                friendState[i] = new byte[friendCount[i]];
+
+                for (j = 0; j < friendCount[i]; j++) {
+                    friendID[i][j] = dataInputStream.readInt();
+                    friendPic[i][j] = dataInputStream.readInt();
+                    nickName[i][j] = readString(dataInputStream, 10);
+                    friendState[i][j] = dataInputStream.readByte();
+                }
+            }
+
+			// 读取结束，写入对象
+            MsgFriendList msgFriendList = new MsgFriendList();
+            msgFriendList.setUserName(username);
+            msgFriendList.setPic(pic);
+            msgFriendList.setTotalLength(totalLength);
+            msgFriendList.setType(msgType);
+            msgFriendList.setDestination(destination);
+            msgFriendList.setSource(source);
+            msgFriendList.setListCount(listCount);
+            msgFriendList.setListName(listName);
+            msgFriendList.setFriendNum(friendCount);
+            msgFriendList.setFriendID(friendID);
+            msgFriendList.setFriendPic(friendPic);
+            msgFriendList.setNickName(nickName);
+            msgFriendList.setFriendState(friendState);
+
+            return msgFriendList;
         }else if(msgType == 0x04) {  //如果是传送消息
             MsgChatText msgChatText = new MsgChatText();
-        }else if(msgType == 0x05){  //添加好友回执
+            String msgText = readString(dataInputStream, totalLength-13);
+            msgChatText.setTotalLength(totalLength);
+            msgChatText.setType(msgType);
+            msgChatText.setDestination(destination);
+            msgChatText.setSource(source);
+            msgChatText.setMsgText(msgText);
 
+            return msgChatText;
+        }else if(msgType == 0x55){  //添加好友回执
+            MsgAddFriendResponse msgAddFriendResponse = new MsgAddFriendResponse();
+            byte state = dataInputStream.readByte();
+            msgAddFriendResponse.setTotalLength(totalLength);
+            msgAddFriendResponse.setType(msgType);
+            msgAddFriendResponse.setDestination(destination);
+            msgAddFriendResponse.setSource(source);
+            msgAddFriendResponse.setState(state);
+            return msgAddFriendResponse;
         }
         return null;
     }

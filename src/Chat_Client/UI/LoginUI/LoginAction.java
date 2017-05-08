@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import Chat_Client.Chat_Client;
 import Chat_Client.DataBase.FigureProperty;
+import Chat_Client.UI.CustomizedUI.CustomizedJOptionPane;
+import Chat_Client.UI.MainInterfaceUI.MainInterfaceUI;
 import Chat_Client.UI.RegisterUI.RegisterUI;
 
 /**
@@ -33,34 +35,32 @@ public class LoginAction implements ActionListener {
                 user_id = Integer.valueOf(userid_field.getText());
                 password = new String(password_field.getPassword());
                 if (password.equals("")) {
-/**待写自定义通知JOptionPane*/
-//                    JOptionPane.showMessageDialog(null, "密码不为空", "Error", JOptionPane.ERROR_MESSAGE);
+                    new CustomizedJOptionPane("Error","密码不为空");
                 }
                 else {
                     int result = chat_client.Login(user_id, password);
                     if (result == 0) {//若密码正确
                         FigureProperty.cc = chat_client;
-                        new FriendListUI();
+                        new MainInterfaceUI();
                         LoginJF.dispose();
                     } else if (result == 1) {//若密码错误
-                        JOptionPane.showMessageDialog(null, "用户名或密码错误", "Error", JOptionPane.ERROR_MESSAGE);
+                        new CustomizedJOptionPane( "Error","用户名或密码错误");
                         password_field.setText("");
                     } else if (result == 2) {
-                        JOptionPane.showMessageDialog(null, "该用户已经登陆", "Error", JOptionPane.ERROR_MESSAGE);
+                        new CustomizedJOptionPane( "Error","该用户已经登陆");
                         password_field.setText("");
                         userid_field.setText("");
                     } else if(result == 3){
-                        JOptionPane.showMessageDialog(null, "发生未知错误，请稍后重试", "Error", JOptionPane.ERROR_MESSAGE);
+                        new CustomizedJOptionPane( "Error","发生未知错误，请稍后重试");
                         password_field.setText("");
                         userid_field.setText("");
                     }
                 }
             } catch (NumberFormatException e1){//若输入ID号为空
-//                JOptionPane.showMessageDialog(null, "ID不能为空", "Error", JOptionPane.ERROR_MESSAGE);
-/**待写自定义通知JOptionPane*/
+                new CustomizedJOptionPane( "Error","ID不能为空");
             }
         }
-        if(jButton.getText().equals("Register")){
+        if(jButton.getText().equals("Register")){//
             if(!is_Registering){
                 new RegisterUI(this,chat_client);
                 is_Registering = true;
@@ -92,5 +92,4 @@ public class LoginAction implements ActionListener {
         this.is_Registering = is_Registering;
     }
 
-    public static void setLoginJF(JFrame j){this.LoginJF = j;}
 }

@@ -2,6 +2,7 @@ package Chat_Client.UI.RegisterUI;
 
 import Chat_Client.Chat_Client;
 import Chat_Client.UI.CustomizedUI.CloseButton;
+import Chat_Client.UI.CustomizedUI.CustomizedJOptionPane;
 import Chat_Client.UI.CustomizedUI.MinimizeButton;
 import Chat_Client.UI.CustomizedUI.UniversalButton;
 import Chat_Client.UI.LoginUI.LoginAction;
@@ -30,8 +31,8 @@ public class RegisterUI extends JFrame{
             @Override
             public void mousePressed(MouseEvent e) {
                 isDragged = true;
-                xx = getX();
-                yy = getY();
+                xx = e.getX();
+                yy = e.getY();
             }
             @Override
             public void mouseReleased(MouseEvent e1){
@@ -77,12 +78,12 @@ public class RegisterUI extends JFrame{
         contentPane.add(password);
 
         // 设置自制按钮
-        CloseButton eb = new CloseButton();
+        CloseButton eb = new CloseButton(this);
         eb.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent a) {
                 loginAction.setIs_Registering(false);
-                dispose();
+                jFrame.dispose();
             }
         });
         int windowWeith = this.getWidth();
@@ -100,7 +101,7 @@ public class RegisterUI extends JFrame{
                 int keyChar = e.getKeyChar();
                 if((keyChar >= KeyEvent.VK_0 && keyChar <= KeyEvent.VK_9)
                         || (keyChar >= KeyEvent.VK_A && keyChar <= KeyEvent.VK_Z)
-                        || (keyChar >= 'a' && keyChar <= 'z')){
+                        || (keyChar >= 'a' && keyChar <= 'z') || e.getKeyCode() == 8){
                 }else {
                     System.out.println("非法输入");
                     e.consume();        //将此次事件消费掉
@@ -114,12 +115,12 @@ public class RegisterUI extends JFrame{
         nickname.setBorder(null);
         contentPane.add(nickname);
 
-        JLabel lbljk = new JLabel(
-                "*提示：当注册成功，将返回唯一的JK码，请妥善保管。");
-        lbljk.setForeground(Color.WHITE);
-        lbljk.setFont(new Font("微软雅黑", Font.PLAIN, 15));
-        lbljk.setBounds(37, 268, 372, 28);
-        contentPane.add(lbljk);
+        JLabel lbtip = new JLabel(
+                "*提示：当注册成功，将返回唯一的ID码，请妥善保管。");
+        lbtip.setForeground(Color.WHITE);
+        lbtip.setFont(new Font("微软雅黑", Font.PLAIN, 15));
+        lbtip.setBounds(37, 268, 372, 28);
+        contentPane.add(lbtip);
 
        UniversalButton buttonRegister = new UniversalButton("Register Now");
        buttonRegister.setBounds(37, 328, 206, 42);
@@ -127,10 +128,11 @@ public class RegisterUI extends JFrame{
        buttonRegister.addActionListener(new ActionListener() {
            @Override
            public void actionPerformed(ActionEvent e) {
-               if(chat_client.Register(nickname.getText(),password.getText())){
-                   //JOptionPane.showMessageDialog(null, "注册失败", "Error", JOptionPane.ERROR_MESSAGE);
-               }
-               else {
+               if(nickname.getText() == "" || password.getText() == ""){
+                   new CustomizedJOptionPane("Error", "用户名或密码不能为空");
+               } else if(!chat_client.Register(nickname.getText(),password.getText())){
+                   new CustomizedJOptionPane("Error","注册失败");
+               } else {
                    loginAction.setIs_Registering(false);
                    jFrame.dispose();
                }

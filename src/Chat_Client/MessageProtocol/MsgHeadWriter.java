@@ -51,14 +51,47 @@ public class MsgHeadWriter {
             MsgLoginResponse msgLoginResponse = (MsgLoginResponse)msg;
             dos.write(msgLoginResponse.getState());
         }else if(msgType == 0x03){
-           // MsgGroupList
+           // MsgFriendList
+            MsgFriendList msgFriendList = (MsgFriendList) msg;
 
+            String userName = msgFriendList.getUserName();
+            int pic = msgFriendList.getPic();
+            byte listCount = msgFriendList.getListCount();
+            String listName[] = msgFriendList.getListName();
+            byte friendNum[] = msgFriendList.getFriendNum();
+            int friendID[][] = msgFriendList.getFriendID();
+            int friendPic[][] = msgFriendList.getFriendPic();
+            String nickName[][] = msgFriendList.getNickName();
+            byte friendState[][] = msgFriendList.getFriendState();
+
+            // 开始写入流中
+            int i, j;
+            writeString(dos, 10, userName);
+            dos.writeInt(pic);
+            dos.write(listCount);// 分组个数
+            for (i = 0; i < listCount; i++) {
+                writeString(dos, 10, listName[i]);
+                dos.write(friendNum[i]);
+                for (j = 0; j < friendNum[i]; j++) {// 每个组里面
+                    dos.writeInt(friendID[i][j]);
+                    dos.writeInt(friendPic[i][j]);
+                    writeString(dos, 10, nickName[i][j]);
+                    dos.write(friendState[i][j]);
+                }
+            }
         }else if(msgType == 0x04){
             //MsgChatText
+            MsgChatText msgChatText = (MsgChatText) msg;
+            writeString(dos, msgChatText.getTotalLength() - 13, msgChatText.getMsgText());
         }else if(msgType == 0x05){
             //MsgAddFriend
+            MsgAddFriend msgAddFriend = (MsgAddFriend) msg;
+            dos.writeInt(msgAddFriend.getAdd_ID());
+            writeString(dos,msgAddFriend.getTotalLength() -  17,msgAddFriend.getList_name());
         }else if(msgType == 0x55){
             //MsgAddFriendResponse
+            MsgAddFriendResponse msgAddFriendResponse = (MsgAddFriendResponse) msg;
+            dos.write(msgAddFriendResponse.getState());
         }
         dos.flush();
         byte[] data = bous.toByteArray();

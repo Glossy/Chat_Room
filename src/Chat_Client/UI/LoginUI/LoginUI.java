@@ -139,8 +139,7 @@ public class LoginUI extends JFrame{
         //利用ChatClient连接服务器
         Chat_Client chat_client = new Chat_Client("localhost", 9090);
         if (!chat_client.ConnectServer()) {
-//
-            JOptionPane.showMessageDialog(null, "无法连接服务器", "错误", JOptionPane.ERROR_MESSAGE);
+            new CustomizedJOptionPane("Error","无法连接服务器");
             System.exit(0);
         }
         loginAction.setChat_client(chat_client);
