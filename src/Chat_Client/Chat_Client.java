@@ -121,7 +121,7 @@ public class Chat_Client extends Thread{
             MsgRegisterResponse msgRegisterResponse = (MsgRegisterResponse) recMsg;
 
             if (msgRegisterResponse.getState() == 0){//注册成功
-               new CustomizedJOptionPane("Message","注册成功\nJK码为" + msgRegisterResponse.getDestination());
+               new CustomizedJOptionPane("Message","注册成功\nID码为" + msgRegisterResponse.getDestination());
                 return true;
             }else {//注册失败
                 return false;
