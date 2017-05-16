@@ -50,7 +50,7 @@ public class LoginAction implements ActionListener {
                         new CustomizedJOptionPane( "Error","该用户已经登陆");
                         password_field.setText("");
                         userid_field.setText("");
-                    } else if(result == 3){
+                    } else if(result == 3 || result == 4){
                         new CustomizedJOptionPane( "Error","发生未知错误，请稍后重试");
                         password_field.setText("");
                         userid_field.setText("");

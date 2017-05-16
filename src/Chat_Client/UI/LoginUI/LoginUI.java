@@ -20,7 +20,7 @@ public class LoginUI extends JFrame{
     /**
      * 客户端登陆(启动界面)
      */
-    public LoginUI(){
+    public LoginUI() throws InterruptedException {
         // 设置无标题栏
         setUndecorated(true);
         //设置窗口拖动监听器
@@ -94,7 +94,7 @@ public class LoginUI extends JFrame{
             @Override
             public void keyTyped(KeyEvent e) {
                 int keychar = e.getKeyChar();
-                if(keychar >= KeyEvent.VK_0 && keychar <= KeyEvent.VK_9){
+                if(keychar >= KeyEvent.VK_0 && keychar <= KeyEvent.VK_9 || e.getKeyCode() == 8){
                 }
                 else{
                     System.out.println("非法输入");
@@ -139,7 +139,8 @@ public class LoginUI extends JFrame{
         //利用ChatClient连接服务器
         Chat_Client chat_client = new Chat_Client("localhost", 9090);
         if (!chat_client.ConnectServer()) {
-            new CustomizedJOptionPane("Error","无法连接服务器");
+            new CustomizedJOptionPane("Error","无法连接服务器\n5秒后自动关闭");
+            Thread.sleep(5000);
             System.exit(0);
         }
         loginAction.setChat_client(chat_client);

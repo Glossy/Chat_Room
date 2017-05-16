@@ -5,4 +5,7 @@
 # IntelliJ project files
 .idea
 out
-gen
+/sqlite-jdbc-3.16.1.jar
+
+!/src/Chat_Server/
+!/src/Chat_Client/

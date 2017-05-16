@@ -38,7 +38,9 @@ public class MsgParser {
 		ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(data);
 		DataInputStream dataInputStream = new DataInputStream(byteArrayInputStream);
 		byte msgType = dataInputStream.readByte();
-		int destination = dataInputStream.readInt();
+        System.out.print("receive MsgType 0x");
+        System.out.printf("%02x \n",msgType);
+        int destination = dataInputStream.readInt();
 		int source = dataInputStream.readInt();
         if (msgType == 0x01) {// 如果是注册信息
             String nickname = readString(dataInputStream, 10);
@@ -134,7 +136,7 @@ public class MsgParser {
             return msgFriendList;
         }else if(msgType == 0x04) {  //如果是传送消息
             MsgChatText msgChatText = new MsgChatText();
-            String msgText = readString(dataInputStream, totalLength-13);
+            String msgText = readString(dataInputStream, totalLength - 13);
             msgChatText.setTotalLength(totalLength);
             msgChatText.setType(msgType);
             msgChatText.setDestination(destination);

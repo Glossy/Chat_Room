@@ -23,7 +23,7 @@ public class Chat_Client extends Thread{
     /**
      * 程序入口
      */
-    public static void main(String args[]){
+    public static void main(String args[]) throws InterruptedException {
         LoginUI loginUI = new LoginUI();
         LoginAction.LoginJF = loginUI;
     }
@@ -227,7 +227,7 @@ public class Chat_Client extends Thread{
     public byte[] receiveMessage()throws IOException{
         DataInputStream dataInputStream = new DataInputStream(inputStream);
         int totalLength = dataInputStream.readInt();
-        System.out.println("TotalLength :" + totalLength);
+        System.out.println("Receive Msg TotalLength :" + totalLength);
         byte[] data = new byte[totalLength - 4];
         dataInputStream.readFully(data);
         return data;
@@ -318,6 +318,23 @@ public class Chat_Client extends Thread{
         mct.setMsgText(Msg);
 
         byte[] sendMsg = MsgHeadWriter.packMessage(mct);
+        outputStream.write(sendMsg);
+        outputStream.flush();
+    }
+
+    public void sendGroupMsg(int groupID, String Msg) throws IOException{
+        MsgGroupChatText msgGroupChatText = new MsgGroupChatText();
+        byte data[] = Msg.getBytes();
+        int TotalLen = 13;
+        TotalLen += data.length;
+        byte type = 0x06;
+        msgGroupChatText.setTotalLength(TotalLen);
+        msgGroupChatText.setType(type);
+        msgGroupChatText.setDestination(groupID);
+        msgGroupChatText.setSource(IDNum);
+        msgGroupChatText.setMsgText(Msg);
+
+        byte[] sendMsg = MsgHeadWriter.packMessage(msgGroupChatText);
         outputStream.write(sendMsg);
         outputStream.flush();
     }

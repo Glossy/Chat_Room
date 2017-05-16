@@ -92,6 +92,10 @@ public class MsgHeadWriter {
             //MsgAddFriendResponse
             MsgAddFriendResponse msgAddFriendResponse = (MsgAddFriendResponse) msg;
             dos.write(msgAddFriendResponse.getState());
+        }else if(msgType == 0x06){
+            //MsgGroupChatText
+            MsgGroupChatText msgGroupChatText = (MsgGroupChatText) msg;
+            writeString(dos,msgGroupChatText.getTotalLength() - 13,msgGroupChatText.getMsgText());
         }
         dos.flush();
         byte[] data = bous.toByteArray();
