@@ -1,3 +1,4 @@
 # Chat_Room
-Java coursework in school 
-a client-server Java Socket Chat-Room
+Java Coursework In School 
+
+A Client-server Java Socket Chat-Room
