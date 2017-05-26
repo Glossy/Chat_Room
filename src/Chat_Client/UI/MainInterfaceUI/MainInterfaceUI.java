@@ -2,6 +2,7 @@ package Chat_Client.UI.MainInterfaceUI;
 
 import Chat_Client.DataBase.FigureProperty;
 import Chat_Client.DataBase.FriendListInfo;
+import Chat_Client.DataBase.GroupListInfo;
 import Chat_Client.UI.AddFriendUI.AddFriendUI;
 import Chat_Client.UI.CustomizedUI.*;
 
@@ -17,7 +18,8 @@ import java.io.IOException;
  */
 public class MainInterfaceUI extends JFrame{
     private boolean isAdding = false;
-    private ListPane list;
+    private ListPane list;//好友列表
+    private ListPane groupList; //群聊列表
     private int xx, yy;
     private boolean isDraging = false;
     private MainInterfaceUI mainInterfaceUI;
@@ -25,6 +27,7 @@ public class MainInterfaceUI extends JFrame{
     private JPanel panel;
     private FriendListInfo user;
     private JPanel contentPane;
+    private GroupListInfo groupListInfo;
 
     public MainInterfaceUI(){
         mainInterfaceUI = this;
@@ -32,6 +35,7 @@ public class MainInterfaceUI extends JFrame{
         setBackground(Color.DARK_GRAY);
         try{
             user = FigureProperty.cc.getlist();
+            groupListInfo = FigureProperty.cc.getGroupList();
         }catch (IOException e){
             e.printStackTrace();
         }
@@ -122,7 +126,13 @@ public class MainInterfaceUI extends JFrame{
         contentPane.add(panel);
         panel.setLayout(null);
 
+        JPanel listcontainer = new JPanel();//用于放置群聊列表和好友列表的JPanel
+        listcontainer.setBackground(Color.DARK_GRAY);
+        listcontainer.setBounds(0,0,272,420);
+        listcontainer.setLayout(new BoxLayout(listcontainer,BoxLayout.Y_AXIS));
+
         list = new ListPane(user);
+        groupList = new ListPane()
         scrollPane = new JScrollPane(list);
         FigureProperty.list = list;//设置list
         scrollPane.getVerticalScrollBar().setUI(new CustomizedScrollBarUI());

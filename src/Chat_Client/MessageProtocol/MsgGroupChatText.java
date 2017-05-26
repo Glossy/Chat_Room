@@ -6,7 +6,7 @@ package Chat_Client.MessageProtocol;
  * type 0x06
  */
 public class MsgGroupChatText extends MsgHead {
-    private String msgText;
+    private String msgText; //destination此时为群聊的ID号
 
     public String getMsgText() {
         return msgText;

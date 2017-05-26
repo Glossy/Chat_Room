@@ -39,7 +39,7 @@ public class MsgParser {
         int dest = dins.readInt();
         int src = dins.readInt();
         if (msgtype == 0x01) {// 如果是注册信息
-            String nikeName = readString(dins, 10);
+            String nikeName = readString(dins, 15);
             String pwd = readString(dins, 10);
             MsgRegister mr = new MsgRegister();
             mr.setTotalLen(totalLen);
@@ -87,7 +87,7 @@ public class MsgParser {
         else if (msgtype == 0x03) { // 如果是好友列表
             int i, j;
 
-            String UserName = readString(dins, 10);// 读取用户名
+            String UserName = readString(dins, 15);// 读取用户名
             int pic = dins.readInt();
             byte listCount = dins.readByte();// 读取好友分组个数
             String listName[] = new String[listCount];
@@ -106,7 +106,7 @@ public class MsgParser {
             friendState = new byte[listCount][];// 设置第一维长度
 
             for (i = 0; i < listCount; i++) {
-                listName[i] = readString(dins, 10);
+                listName[i] = readString(dins, 15);
                 friendCount[i] = dins.readByte();
 
                 friendID[i] = new int[friendCount[i]];// 设置第二维长度
@@ -117,7 +117,7 @@ public class MsgParser {
                 for (j = 0; j < friendCount[i]; j++) {
                     friendID[i][j] = dins.readInt();
                     friendPic[i][j] = dins.readInt();
-                    nickName[i][j] = readString(dins, 10);
+                    nickName[i][j] = readString(dins, 15);
                     friendState[i][j] = dins.readByte();
                     System.out.println(friendID[i][j]+" "+ friendPic[i][j]+" " + nickName[i][j] + " " + friendState[i][j]);
                 }
@@ -148,7 +148,7 @@ public class MsgParser {
 
         else if (msgtype == 0x04) { //如果是传送消息
             MsgChatText mct = new MsgChatText();
-            String msgText = readString(dins, totalLen-13);
+            String msgText = readString(dins, totalLen - 13);
             mct.setTotalLen(totalLen);
             mct.setType(msgtype);
             mct.setDestination(dest);

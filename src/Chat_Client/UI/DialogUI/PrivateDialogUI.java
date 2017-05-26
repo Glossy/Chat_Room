@@ -14,6 +14,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 import static Chat_Client.UI.DialogUI.PrivateDialogHandler.DeleteDialog;
+import static Chat_Client.UI.GroupDialogUI.GroupDialogHandler.DeleteDialog;
 
 /**
  * Created by Wu on 2017/5/6.

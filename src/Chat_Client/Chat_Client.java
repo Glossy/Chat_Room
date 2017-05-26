@@ -2,9 +2,12 @@ package Chat_Client;
 
 import Chat_Client.DataBase.FigureProperty;
 import Chat_Client.DataBase.FriendListInfo;
+import Chat_Client.DataBase.GroupListInfo;
 import Chat_Client.MessageProtocol.*;
 import Chat_Client.UI.CustomizedUI.CustomizedJOptionPane;
+import Chat_Client.UI.CustomizedUI.ListPane;
 import Chat_Client.UI.DialogUI.PrivateDialogHandler;
+import Chat_Client.UI.GroupDialogUI.GroupDialogHandler;
 import Chat_Client.UI.LoginUI.LoginAction;
 import Chat_Client.UI.LoginUI.LoginUI;
 
@@ -213,9 +216,21 @@ public class Chat_Client extends Thread{
             byte result = msgAddFriendResponse.getState();
             System.out.println("Add Friend Result " + result);
             if (FigureProperty.addFriendUI != null) {
-//				System.out.println("To show Result");
+				System.out.println("To show Result");
                 FigureProperty.addFriendUI.showResult(result);//弹窗显示申请结果
             }
+        }else if(msgType == 0x66){  //更新群聊列表
+            System.out.println("Refresh Group List");
+            GroupListInfo list = packGroupList(receiveMessage);
+            FigureProperty.groupList.Refresh_List(list);
+        }else if(msgType == 0x06) { //群聊消息
+            System.out.println("Process Group Chat Message");
+            MsgGroupChatText msgGroupChatText = (MsgGroupChatText)receiveMessage;
+            int groupID = msgGroupChatText.getDestination();
+            int from = msgGroupChatText.getSource();
+            String Msg = msgGroupChatText.getMsgText();
+            GroupDialogHandler.showMessage(from,groupID,Msg);
+
         }
     }
 
@@ -253,6 +268,21 @@ public class Chat_Client extends Thread{
         list.setFriendState(msgFriendList.getFriendState());
         return list;
     }
+    public GroupListInfo packGroupList(MsgHead recMsg){
+        GroupListInfo list = new GroupListInfo();
+        MsgGroupList msgGroupList = (MsgGroupList) recMsg;
+
+        list.setGroupCount(msgGroupList.getGroupCount());
+        list.setGroupID(msgGroupList.getGroupID());
+        list.setGroupName(msgGroupList.getGroupName());
+        list.setGrouperCount(msgGroupList.getGrouperCount());
+        list.setGrouperID(msgGroupList.getGrouperID());
+        list.setGrouperNickName(msgGroupList.getGrouperNickName());
+        list.setState(msgGroupList.getGrouperstate());
+        list.setIsFriend(msgGroupList.getIsFriend());
+
+        return list;
+    }
     /**
      * ListInfo
      * 接收好友列表
@@ -268,6 +298,16 @@ public class Chat_Client extends Thread{
             System.exit(0);
         }
         return packlist(recMsg);
+    }
+
+    public GroupListInfo getGroupList() throws IOException{
+        byte[] data = receiveMessage();
+        MsgHead recMsg = MsgParser.parseMsg(data);
+        if (recMsg.getType() != 0x66) {
+            System.out.println("通讯协议错误");
+            System.exit(0);
+        }
+        return packGroupList(recMsg);
     }
 
     /**

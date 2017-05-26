@@ -16,8 +16,8 @@ public class FigureProperty {
     public static int IDNum;
     public static int Pic;
     public static String NickName;
-    public static ListPane list;
+    public static ListPane list;    //好友列表
     public static AddFriendUI addFriendUI;
     public static MainInterfaceUI mainInterfaceUI;
-    public static GroupDialogUI groupDialogUI;
+    public static ListPane groupList; //群聊列表
 }

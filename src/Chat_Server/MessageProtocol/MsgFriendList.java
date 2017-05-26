@@ -35,15 +35,15 @@ public class MsgFriendList extends MsgHead{
         setFriendPic(user.getFriendPic());
         setNickName(user.getFriendName());
         int len = 13;
-        len += 10; // userName
+        len += 15; // userName
         len += 4;  //pic
         len += 1; // listCount
-        len += (10 * listCount); // listName
+        len += (15 * listCount); // listName
         len += listCount; // friendCount
         friendState = new byte[listCount][];
 
         for (int i = 0; i < listCount; i++) {
-            len += friendCount[i] * 19; // 每个好友长度为19
+            len += friendCount[i] * 24; // 每个好友长度为24 ： 头像 4、昵称 15、 ID 4、 状态 1
 
             friendState[i] = new byte[friendCount[i]];
         }
@@ -151,16 +151,16 @@ public class MsgFriendList extends MsgHead{
         byte friendState[][] = getFriendState();
 
         // 开始写入流中
-        writeString(dous, 10, userName);
+        writeString(dous, 15, userName);
         dous.writeInt(pic);
         dous.write(listCount);// 分组个数
         for (int i = 0; i < listCount; i++) {
-            writeString(dous, 10, listName[i]);
+            writeString(dous, 15, listName[i]);
             dous.write(friendCount[i]);
             for (int j = 0; j < friendCount[i]; j++) {// 每个组里面
                 dous.writeInt(friendID[i][j]);
                 dous.writeInt(friendPic[i][j]);
-                writeString(dous, 10, nickName[i][j]);
+                writeString(dous, 15, nickName[i][j]);
                 dous.write(friendState[i][j]);
             }
         }

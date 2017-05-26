@@ -1,10 +1,5 @@
 package Chat_Client.UI.CustomizedUI;
 
-import Chat_Client.DataBase.FriendListInfo;
-import Chat_Client.DataBase.PrivateDialogDataBase;
-import Chat_Client.UI.CustomizedUI.CustomizedJOptionPane;
-import Chat_Client.UI.DialogUI.PrivateDialogHandler;
-import Chat_Client.UI.DialogUI.PrivateDialogUI;
 import sun.audio.AudioPlayer;
 import sun.audio.AudioStream;
 
@@ -13,21 +8,18 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URL;
 
 /**
- * Created by Wu on 2017/5/6.
- * 这里把列表中的每一个用户包装成一个JLabel
- * 方便放在JScollPane里面
+ * Created by Wu on 2017/5/17.
+ * 用于显示群聊成员的标签
  */
-public class FriendMemberJLabel extends JLabel{
-
+public class GroupMemberJLabel extends JLabel {
     public JPanel jPanel = new JPanel(); // 模板容器；
     private JLabel lb_nickName = null; // 显示昵称；
     private JLabel lb_IDnum = null; // 显示ID号
     private JLabel lb_State;//显示状态
+    private JLabel lb_Friend;//显示是否为好友
     private boolean is_exit = true;
     private int MemberIDNum;
     private int pic;
@@ -52,7 +44,7 @@ public class FriendMemberJLabel extends JLabel{
         this.nickname = nickname;
     }
 
-    public FriendMemberJLabel(int picNum, String nickname, int IDNum, byte state){
+    public GroupMemberJLabel(int picNum, String nickname, int IDNum, byte state, byte isFriend){
         MemberIDNum = IDNum;
         pic = picNum;
         this.nickname = nickname;
@@ -86,8 +78,24 @@ public class FriendMemberJLabel extends JLabel{
         lb_State.setForeground(Color.WHITE);
         lb_State.setFont(new Font("Microsoft JhengHei Light", Font.PLAIN, 18));
         lb_State.setBounds(new Rectangle(70, 10, 95, 20));
-        lb_State.setBounds(180, 10, 95, 20);
+        lb_State.setBounds(160, 10, 95, 20);
         add(lb_State);
+
+        //是否为好友
+        String IsFriend;
+        if(isFriend == 0){
+            IsFriend = "You";
+        }else if(isFriend == 1){
+            IsFriend = "Friend";
+        }else{// isFriend == 2
+            IsFriend = "Stranger";
+        }
+        lb_Friend = new JLabel();
+        lb_Friend.setForeground(Color.WHITE);
+        lb_Friend.setText(IsFriend);
+        lb_Friend.setFont(new Font("Microsoft JhengHei Light", Font.PLAIN, 18));
+        lb_Friend.setBounds(160,40,95,20);
+        add(lb_Friend);
 
         //头像
         JButton UserIcon = new JButton();
@@ -120,16 +128,8 @@ public class FriendMemberJLabel extends JLabel{
             }
             @Override
             public void mouseClicked(MouseEvent e) {//点击则弹出对话框
-                PrivateDialogUI dialog;
-                if(PrivateDialogDataBase.dialogDB.containsKey(String.valueOf(IDNum))){
-                    dialog = PrivateDialogDataBase.dialogDB.get(String.valueOf(IDNum));
-                    dialog.toFront();   //存在窗口则使聊天窗口置顶
+
                 }
-                else{//不存在则弹出新窗口并注册
-                    dialog = new PrivateDialogUI(nickname,picNum,IDNum);
-                    PrivateDialogHandler.RegisterDialog(IDNum, dialog);
-                }
-            }
         });
     }
 

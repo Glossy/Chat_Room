@@ -18,14 +18,79 @@ public class UserInfo {
     private int friendPic[][];//好友头像
     private String friendNickName[][];// 每个好友的昵称
 
-    //群组信息 getter 和 setter 还没写
+    //群组信息
     private byte groupCount;//保存有多少组群聊
-    private String ListGroup[];//群聊名称
+    private int groupID[];
+    private String groupName[];//群聊名称
     private byte[] grouperCount;//群聊中人数
-    private int grouperNum[][]; //群聊人中的ID号
+    private int grouperID[][]; //群聊人中的ID号
     private String grouperNickName[][]; //群聊中每个人的昵称
-    private boolean isFriend[][]; //群聊中每个人是否为自己的好友
+    private byte isFriend[][]; //群聊中每个人是否为自己的好友
+    private byte state[][];//状态
 
+    public byte[][] getState() {
+        return state;
+    }
+
+    public void setState(byte[][] state) {
+        this.state = state;
+    }
+
+    public byte getGroupCount() {
+        return groupCount;
+    }
+
+    public void setGroupCount(byte groupCount) {
+        this.groupCount = groupCount;
+    }
+
+    public int[] getGroupID() {
+        return groupID;
+    }
+
+    public void setGroupID(int[] groupID) {
+        this.groupID = groupID;
+    }
+
+    public String[] getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String[] groupName) {
+        this.groupName = groupName;
+    }
+
+    public byte[] getGrouperCount() {
+        return grouperCount;
+    }
+
+    public void setGrouperCount(byte[] grouperCount) {
+        this.grouperCount = grouperCount;
+    }
+
+    public int[][] getGrouperID() {
+        return grouperID;
+    }
+
+    public void setGrouperID(int[][] grouperID) {
+        this.grouperID = grouperID;
+    }
+
+    public String[][] getGrouperNickName() {
+        return grouperNickName;
+    }
+
+    public void setGrouperNickName(String[][] grouperNickName) {
+        this.grouperNickName = grouperNickName;
+    }
+
+    public byte[][] getIsFriend() {
+        return isFriend;
+    }
+
+    public void setIsFriend(byte[][] isFriend) {
+        this.isFriend = isFriend;
+    }
 
     public byte getListCount() {return listCount;}
     public void setListCount(byte listCount) {this.listCount = listCount;}

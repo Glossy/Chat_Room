@@ -2,6 +2,7 @@ package Chat_Client.UI.GroupDialogUI;
 
 import Chat_Client.DataBase.FigureProperty;
 import Chat_Client.DataBase.GroupDialogDataBase;
+import Chat_Client.DataBase.GroupListInfo;
 import Chat_Client.DataBase.UserInfo;
 
 import java.io.IOException;
@@ -11,15 +12,17 @@ import java.io.IOException;
  * Created by Wu on 2017/5/16.
  */
 public class GroupDialogHandler {
-    public static void showMessage(int from,String name, String msg) throws IOException {
+    public static void showMessage(int from,int groupID, String msg) throws IOException {
+        //获取from的Nickname
+        String name = FigureProperty.groupList.findNameByID(from);
         /*
 		 * 找到是否打开了对应的对话UI
 		 */
-        if(GroupDialogDataBase.dialogDB.containsKey(String.valueOf(from))){
+        if(GroupDialogDataBase.dialogDB.containsKey(String.valueOf(groupID))){
 			/*
 			 * 有的话
 			 */
-			GroupDialogUI dialog = GroupDialogDataBase.dialogDB.get(String.valueOf(from));
+			GroupDialogUI dialog = GroupDialogDataBase.dialogDB.get(String.valueOf(groupID));
             dialog.ShowMsg(name,msg);
             //dialog.LetsShack();
         }
@@ -31,10 +34,10 @@ public class GroupDialogHandler {
 			/*
 			 * 直接弹出窗口
 			 */
-            UserInfo user = FigureProperty.list.findUserByID(from);
+            GroupListInfo group = FigureProperty.groupList.findGroupByID(groupID);
             //System.out.println("New MSG From"+user.getNickName());
-            GroupDialogUI dialog =  new GroupDialogUI(user.getNickName(),user.getPic(), from);
-            RegisterDialog(from, dialog);
+            GroupDialogUI dialog =  new GroupDialogUI(group.getGGroupName(),groupID);
+            RegisterDialog(groupID, dialog);
             dialog.ShowMsg(name, msg);
             dialog.Shack();
         }

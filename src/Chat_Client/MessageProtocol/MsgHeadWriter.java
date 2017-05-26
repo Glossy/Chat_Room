@@ -39,7 +39,7 @@ public class MsgHeadWriter {
         int msgType = msg.getType();
         if(msgType == 0x01){
             MsgRegister mr = (MsgRegister) msg;
-            writeString(dos, 10, mr.getNickName());
+            writeString(dos, 15, mr.getNickName());
             writeString(dos, 10, mr.getPassWord());
         }else if(msgType == 0x11){
             MsgRegisterResponse msgRegisterResponse = (MsgRegisterResponse)msg;
@@ -70,12 +70,12 @@ public class MsgHeadWriter {
             dos.writeInt(pic);
             dos.write(listCount);// 分组个数
             for (i = 0; i < listCount; i++) {
-                writeString(dos, 10, listName[i]);
+                writeString(dos, 15, listName[i]);
                 dos.write(friendNum[i]);
                 for (j = 0; j < friendNum[i]; j++) {// 每个组里面
                     dos.writeInt(friendID[i][j]);
                     dos.writeInt(friendPic[i][j]);
-                    writeString(dos, 10, nickName[i][j]);
+                    writeString(dos, 15, nickName[i][j]);
                     dos.write(friendState[i][j]);
                 }
             }
@@ -96,6 +96,49 @@ public class MsgHeadWriter {
             //MsgGroupChatText
             MsgGroupChatText msgGroupChatText = (MsgGroupChatText) msg;
             writeString(dos,msgGroupChatText.getTotalLength() - 13,msgGroupChatText.getMsgText());
+        }else if(msgType == 0x66){
+            //MsgGroupList
+            MsgGroupList msgGroupList = (MsgGroupList)msg;
+
+            byte groupCount = msgGroupList.getGroupCount();
+            int groupID[] = msgGroupList.getGroupID();
+            String groupName[] = msgGroupList.getGroupName();
+            byte grouperCount[] = msgGroupList.getGrouperCount();
+            int grouperID[][] = msgGroupList.getGrouperID();
+            String grouperNickName[][] = msgGroupList.getGrouperNickName();
+            byte grouperState[][] = msgGroupList.getGrouperstate();
+            byte isFriend[][] = msgGroupList.getIsFriend();
+            int i, j;
+
+            dos.writeByte(groupCount);
+            for(i = 0; i < groupCount; i++){
+                dos.writeInt(groupID[i]);
+            }
+            for(i = 0; i < groupCount; i++){
+                writeString(dos, 15, groupName[i]);
+            }
+            for(i = 0; i < groupCount; i++){
+                dos.writeByte(grouperCount[i]);
+            }
+            for(i = 0; i < groupCount; i++){
+                for(j = 0; j < grouperCount[i]; j++){
+                    dos.writeInt(grouperID[i][j]);
+                    writeString(dos,15,grouperNickName[i][j]);
+                    dos.writeByte(grouperState[i][j]);
+                    dos.writeByte(isFriend[i][j]);
+                }
+            }
+
+        }else if(msgType == 0x07){
+            //MsgAddGroup
+            MsgAddGroup msgAddGroup = (MsgAddGroup)msg;
+            int addGroupID = msgAddGroup.getAddGroupID();
+            dos.writeInt(addGroupID);
+        }else if(msgType == 0x77){
+            //MsgAddGroupResponse
+            MsgAddGroupResponse msgAddGroupResponse = (MsgAddGroupResponse)msg;
+            byte state = msgAddGroupResponse.getState();
+            dos.writeByte(state);
         }
         dos.flush();
         byte[] data = bous.toByteArray();

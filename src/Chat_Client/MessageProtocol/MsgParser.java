@@ -43,7 +43,7 @@ public class MsgParser {
         int destination = dataInputStream.readInt();
 		int source = dataInputStream.readInt();
         if (msgType == 0x01) {// 如果是注册信息
-            String nickname = readString(dataInputStream, 10);
+            String nickname = readString(dataInputStream, 15);
             String password = readString(dataInputStream, 10);
             MsgRegister msgRegister = new MsgRegister();
             msgRegister.setTotalLength(totalLength);
@@ -82,7 +82,7 @@ public class MsgParser {
             return msgLoginResponse;
         }else if(msgType == 0x03){ // 如果是好友列表
             int i, j;
-            String username = readString(dataInputStream, 10);
+            String username = readString(dataInputStream, 15);
             int pic = dataInputStream.readInt();
             byte listCount = dataInputStream.readByte();// 读取好友分组个数
             String listName[] = new String[listCount];
@@ -101,7 +101,7 @@ public class MsgParser {
             friendState = new byte[listCount][];
 
             for (i = 0; i < listCount; i++) {
-                listName[i] = readString(dataInputStream, 10);
+                listName[i] = readString(dataInputStream, 15);
                 friendCount[i] = dataInputStream.readByte();
 
                 friendID[i] = new int[friendCount[i]];// 设置第二维长度
@@ -112,7 +112,7 @@ public class MsgParser {
                 for (j = 0; j < friendCount[i]; j++) {
                     friendID[i][j] = dataInputStream.readInt();
                     friendPic[i][j] = dataInputStream.readInt();
-                    nickName[i][j] = readString(dataInputStream, 10);
+                    nickName[i][j] = readString(dataInputStream, 15);
                     friendState[i][j] = dataInputStream.readByte();
                 }
             }
@@ -153,6 +153,82 @@ public class MsgParser {
             msgAddFriendResponse.setSource(source);
             msgAddFriendResponse.setState(state);
             return msgAddFriendResponse;
+        }else if(msgType == 0x06){ //群聊消息体
+            MsgGroupChatText msgGroupChatText = new MsgGroupChatText();
+            String groupMsgText = readString(dataInputStream, totalLength - 13);
+            msgGroupChatText.setTotalLength(totalLength);
+            msgGroupChatText.setType(msgType);
+            msgGroupChatText.setDestination(destination);
+            msgGroupChatText.setSource(source);
+            msgGroupChatText.setMsgText(groupMsgText);
+
+            return msgGroupChatText;
+        }else if(msgType == 0x66){  //群聊列表
+            MsgGroupList msgGroupList = new MsgGroupList();
+            byte groupCount = dataInputStream.readByte();
+
+            int groupID[] = new int[groupCount];
+            String groupName[] = new String[groupCount];
+            byte grouperCount[] = new byte[groupCount];
+            int grouperID[][] = new int[groupCount][];
+            String grouperNickName[][] = new String[groupCount][];
+            byte grouperState[][] = new byte[groupCount][];
+            byte isFriend[][] = new byte[groupCount][];
+            int i, j;
+
+            for(i = 0; i < groupCount; i++){
+                groupID[i] = dataInputStream.readInt();
+            }
+            for(i = 0; i < groupCount; i++){
+               groupName[i] = readString(dataInputStream, 15);
+            }
+            for(i = 0; i < groupCount; i++){
+                grouperCount[i] = dataInputStream.readByte();
+            }
+            for (i = 0; i < groupCount; i++){
+                for (j = 0; j < grouperCount[i]; j++){
+                    grouperID[i][j] = dataInputStream.readInt();
+                    grouperNickName[i][j] = readString(dataInputStream, 15);
+                    grouperState[i][j] = dataInputStream.readByte();
+                    isFriend[i][j] = dataInputStream.readByte();
+                }
+            }
+
+            msgGroupList.setGroupCount(groupCount);
+            msgGroupList.setGrouperCount(grouperCount);
+            msgGroupList.setGrouperID(grouperID);
+            msgGroupList.setGroupName(groupName);
+            msgGroupList.setGrouperID(grouperID);
+            msgGroupList.setGrouperNickName(grouperNickName);
+            msgGroupList.setGroupName(groupName);
+            msgGroupList.setSource(source);
+            msgGroupList.setDestination(destination);
+            msgGroupList.setTotalLength(totalLength);
+            msgGroupList.setType(msgType);
+
+            return  msgGroupList;
+        }else if(msgType == 0x07){  //加群聊
+            MsgAddGroup msgAddGroup = new MsgAddGroup();
+            int addGroupID = dataInputStream.readInt();
+
+            msgAddGroup.setAddGroupID(addGroupID);
+            msgAddGroup.setDestination(destination);
+            msgAddGroup.setSource(source);
+            msgAddGroup.setTotalLength(totalLength);
+            msgAddGroup.setType(msgType);
+
+            return msgAddGroup;
+        }else if(msgType == 0x77){  //加群聊回复
+            MsgAddGroupResponse msgAddGroupResponse = new MsgAddGroupResponse();
+            byte state = dataInputStream.readByte();
+
+            msgAddGroupResponse.setDestination(destination);
+            msgAddGroupResponse.setSource(source);
+            msgAddGroupResponse.setTotalLength(totalLength);
+            msgAddGroupResponse.setType(msgType);
+            msgAddGroupResponse.setState(state);
+
+            return  msgAddGroupResponse;
         }
         return null;
     }

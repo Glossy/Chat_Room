@@ -5,6 +5,7 @@ package Chat_Client.MessageProtocol;
  * type 0x03
  */
 public class MsgFriendList extends MsgHead {
+
     private String UserName;
     private int pic;
     private byte listCount;

@@ -68,8 +68,5 @@ public class PrivateDialogHandler {
     public static void RegisterDialog(int IDNum,PrivateDialogUI dialog){
         PrivateDialogDataBase.dialogDB.put(String.valueOf(IDNum), dialog);
     }
-    //从数据库中删除PrivateDialogUI
-    public static void DeleteDialog(int IDNum){
-        PrivateDialogDataBase.dialogDB.remove(String.valueOf(IDNum));
-    }
+
 }

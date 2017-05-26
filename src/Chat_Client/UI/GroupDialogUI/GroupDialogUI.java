@@ -33,7 +33,7 @@ public class GroupDialogUI extends JFrame{
     public int getGroupID() {return groupID;}
     public void setGroupID(int groupID) {this.groupID = groupID;}
 
-    public GroupDialogUI(String groupName, int groupPic, final int groupID){
+    public GroupDialogUI(String groupName, final int groupID){
         this.groupName = groupName;
         this.groupID = groupID;
         setUndecorated(true);
@@ -60,12 +60,12 @@ public class GroupDialogUI extends JFrame{
             }
         });
 
-        setBounds(100, 100, 902, 642);
+        setBounds(100, 100, 902 - 20, 642);
 
         panel = new JPanel();
         panel.setBackground(Color.DARK_GRAY);
         panel.setLayout(null);
-        panel.setBounds(0,0,902,642);
+        panel.setBounds(0,0,902 - 20,642);
 
         contentPane = new JPanel();
         contentPane.setBackground(Color.DARK_GRAY);
@@ -77,7 +77,7 @@ public class GroupDialogUI extends JFrame{
         listPane.setBackground(Color.DARK_GRAY);
         listPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         listPane.setLayout(null);
-        listPane.setBounds(653,0,249,642);
+        listPane.setBounds(653,0,249 - 20,642);
 
         // 设置自制按钮
         CloseButton eb = new CloseButton(this);
@@ -88,10 +88,10 @@ public class GroupDialogUI extends JFrame{
             }
         });
         int windowWeith = this.getWidth();
-        eb.setBounds(windowWeith - 40, 0, 40, 30);
+        eb.setBounds(249 - 20 - 40, 0, 40, 30);
         listPane.add(eb);
         MinimizeButton mb = new MinimizeButton(this);
-        mb.setBounds(windowWeith - 80, 0, 40, 30);
+        mb.setBounds(249 - 20 - 80, 0, 40, 30);
         listPane.add(mb);
 
         JLabel GroupName = new JLabel();
@@ -121,7 +121,7 @@ public class GroupDialogUI extends JFrame{
         sendscrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);// 不显示水平滚动条；
         sendscrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         sendscrollPane.setBorder(null);
-        sendscrollPane.setBounds(0, 325, 653, 96);
+        sendscrollPane.setBounds(0, 325 + 148, 653, 96);
         contentPane.add(sendscrollPane);
 
         UniversalButton Send = new UniversalButton("Send");
@@ -137,7 +137,7 @@ public class GroupDialogUI extends JFrame{
                 }
             }
         });
-        Send.setBounds(77, 440, 165, 40);
+        Send.setBounds(77, 588, 165, 40);
         contentPane.add(Send);
 
         UniversalButton Close = new UniversalButton("Close");
@@ -147,7 +147,7 @@ public class GroupDialogUI extends JFrame{
                 dispose();
             }
         });
-        Close.setBounds(398, 440, 165, 40);
+        Close.setBounds(398, 588, 165, 40);
         contentPane.add(Close);
 
         JLabel lbGroupName = new JLabel(groupName);
@@ -156,11 +156,25 @@ public class GroupDialogUI extends JFrame{
         lbGroupName.setBounds(31, 10, 513, 91);
         contentPane.add(lbGroupName);
 
-        JLabel groupInfo = new JLabel();
+        JLabel groupInfo = new JLabel("Group List");
         groupInfo.setForeground(Color.WHITE);
         groupInfo.setFont(new Font("Microsoft JhengHei Light", Font.PLAIN, 35));
-        groupInfo.setBounds(653 + 25, 10, 170, 91);
-        listPane.add(lbGroupName);
+        groupInfo.setBounds( 25, 10 + 20, 170, 91);
+        listPane.add(groupInfo);
+
+        //群聊成员列表
+
+        GroupMemberJLabel ownerInfo = new GroupMemberJLabel(FigureProperty.Pic,FigureProperty.NickName,FigureProperty.IDNum,(byte) 0,(byte)0);
+        //listPane.add(ownerInfo);
+        ownerInfo.setBounds(0,152,239,70);
+        listPane.add(ownerInfo);
+
+        //ListPane list = new ListPane();
+        //scrollPane = new JScrollPane(list);
+
+
+        //listPane.add(OwnInfo);
+
 
         panel.add(listPane);
         panel.add(contentPane);
@@ -202,6 +216,9 @@ public class GroupDialogUI extends JFrame{
                 e1.printStackTrace();
             }
         }
+    }
 
+    public static void main(String args[]){
+        new GroupDialogUI("123",123);
     }
 }

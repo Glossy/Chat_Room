@@ -15,15 +15,16 @@ public class ListNameJLabel extends JLabel{
 
     public ListNameJLabel(String name, JLabel[] friends, int type) {
 
-        setIcon(new ImageIcon("img/ListImg/ListOff.jpg"));
-        setSize(new Dimension(272, 50));
-
-        setBackground(Color.green);
+        setBackground(Color.DARK_GRAY);
         lb_Name = new JLabel();
+        lb_Name.setText(name);
         lb_Name.setForeground(Color.WHITE);
         lb_Name.setBounds(new Rectangle(20, 10, 95, 20));
         lb_Name.setFont(new Font("Microsoft JhengHei Light", Font.PLAIN, 18));
-        lb_Name.setText(name);
+        this.add(lb_Name);
+
+        setIcon(new ImageIcon("img/ListImg/ListOff.jpg"));
+        setSize(new Dimension(272, 50));
 
         if (type == 0) {//若为好友列表
             for (int i = 0; i < friends.length; i++) {
@@ -64,10 +65,45 @@ public class ListNameJLabel extends JLabel{
                     }
                 }
             });
-        }else{//若是群聊列表
-            for(;;){
-
+        }else if(type == 1){//若为群组列表
+            for (int i = 0; i < friends.length; i++) {
+                friends[i].setVisible(false);
             }
+            addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseExited(MouseEvent e) {
+                    if (is_click) {
+                        setIcon(new ImageIcon("img/ListImg/ListOn.jpg"));
+                    } else {
+                        setIcon(new ImageIcon("img/ListImg/ListOff.jpg"));
+                    }
+                }
+
+                @Override
+                public void mouseEntered(MouseEvent e) {
+                    if (is_click) {
+                        setIcon(new ImageIcon("img/ListImg/ListOnEnter.jpg"));
+                    } else {
+                        setIcon(new ImageIcon("img/ListImg/ListOffEnter.jpg"));
+                    }
+                }
+
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    is_click = !is_click;
+                    if (is_click) {
+                        for (int i = 0; i < friends.length; i++) {
+                            friends[i].setVisible(true);//显示分组好友
+                        }
+                        setIcon(new ImageIcon("img/ListImg/ListOnEnter.jpg"));
+                    } else {
+                        for (int i = 0; i < friends.length; i++) {
+                            friends[i].setVisible(false);
+                        }
+                        setIcon(new ImageIcon("img/ListImg/ListOffEnter.jpg"));
+                    }
+                }
+            });
         }
     }
 }
