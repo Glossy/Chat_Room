@@ -126,15 +126,11 @@ public class MainInterfaceUI extends JFrame{
         contentPane.add(panel);
         panel.setLayout(null);
 
-        JPanel listcontainer = new JPanel();//用于放置群聊列表和好友列表的JPanel
-        listcontainer.setBackground(Color.DARK_GRAY);
-        listcontainer.setBounds(0,0,272,420);
-        listcontainer.setLayout(new BoxLayout(listcontainer,BoxLayout.Y_AXIS));
+        list = new ListPane(user,groupListInfo);    //列表容器
 
-        list = new ListPane(user);
-        groupList = new ListPane()
         scrollPane = new JScrollPane(list);
-        FigureProperty.list = list;//设置list
+        FigureProperty.list = list;//设置好友列表list
+        FigureProperty.groupList = groupList;//设置群列表groupList
         scrollPane.getVerticalScrollBar().setUI(new CustomizedScrollBarUI());
         scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);// 不显示水平滚动条；
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);

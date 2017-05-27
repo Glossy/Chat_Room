@@ -27,19 +27,21 @@ public class ListPane extends JPanel {
     private byte[][] friendState;//好友状态
     private byte[][] isFriend; //若传入群列表判断是否为好友
 
-    public ListPane(FriendListInfo friendList){
+    public ListPane(FriendListInfo friendList, GroupListInfo groupListInfo){
         super();
         this.list = friendList;
+        this.groupListInfo = groupListInfo;
+        setBackground(Color.darkGray);
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.setSize(272, 450);
+        this.setLocation(0, 0);
         initialize();
+        groupInitialize();
+        this.setVisible(true);
     }
 
-    public ListPane(GroupListInfo groupListInfo){
-        super();
-        this.groupListInfo = groupListInfo;
-        groupInitialize();
-    }
     private void initialize(){
-        setBackground(Color.darkGray);
+        //setBackground(Color.darkGray);
         listCount = list.getListCount();
         String[] listName = list.getListName();
         friendNumber = list.getFriendCount();
@@ -66,9 +68,9 @@ public class ListPane extends JPanel {
                 this.add(user[i][j]);
             }
         }
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.setSize(272, 450);
-        this.setLocation(0, 0);
+//        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+//        this.setSize(272, 450);
+//        this.setLocation(0, 0);
     }
 
     public UserInfo findUserByID(int IDNum){
@@ -187,20 +189,26 @@ public class ListPane extends JPanel {
     }
 
     public void groupInitialize(){
-        setBackground(Color.darkGray);
+//        setBackground(Color.darkGray);
 
-        GroupNameJLabel groupNameJLabel[] = new GroupNameJLabel[groupListInfo.getGroupCount() + 1]; //加入一个加群组的JLabel
+        JLabel groupNameJLabel[] = new JLabel[groupListInfo.getGroupCount() + 1]; //加入一个加群组的JLabel 多加入了一个添加群组的label
         int i;
         for (i = 0; i < groupListInfo.getGroupCount(); i++) {
             groupNameJLabel[i] = new GroupNameJLabel(groupListInfo.getGroupName()[i],groupListInfo.getGroupID()[i],groupListInfo.getGrouperCount()[i]);
-            this.add(groupNameJLabel[i]);
             }
+
+        ListNameJLabel listName = new ListNameJLabel("我的群组",groupNameJLabel,1);
+        this.add(listName);
+        for(i = 0; i < groupListInfo.getGroupCount(); i++){
+            this.add(groupNameJLabel[i]);
+        }
 
         JLabel plus = new JLabel();
         plus.setBackground(Color.DARK_GRAY);
         plus.setForeground(Color.white);
-        plus.setText("+");
-        plus.setIcon(new ImageIcon("img/ListImg/memberBGOff.jpg"));//默认显示未选中状态下的背景
+        plus.setText("              +");
+        plus.setFont(new Font("Microsoft JhengHei", Font.PLAIN, 30));
+        //plus.setIcon(new ImageIcon("img/ListImg/memberBGOff.jpg"));//默认显示未选中状态下的背景
         plus.setSize(new Dimension(272, 70));
         plus.addMouseListener(new MouseAdapter() {
             boolean is_exit = false;
@@ -230,9 +238,11 @@ public class ListPane extends JPanel {
             }
         });
         this.add(plus);
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.setSize(272, 450);
-        this.setLocation(0, 0);
+        groupNameJLabel[groupListInfo.getGroupCount()] = plus;
+        plus.setVisible(false);
+//        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+//        this.setSize(272, 450);
+//        this.setLocation(0, 0);
     }
 
 }

@@ -35,7 +35,7 @@ public class MsgHeadWriter {
             throws IOException{
         ByteArrayOutputStream bous = new ByteArrayOutputStream();
         DataOutputStream dos = new DataOutputStream(bous);
-        writeHead(dos,msg);
+        writeHead(dos,msg);     //写入父类的13字节的基础信息
         int msgType = msg.getType();
         if(msgType == 0x01){
             MsgRegister mr = (MsgRegister) msg;

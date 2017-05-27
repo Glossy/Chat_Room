@@ -5,7 +5,8 @@ package Chat_Client.DataBase;
  * 群组列表
  */
 public class GroupListInfo extends UserInfo {
-
+    //以下存储的均为群组的自身信息，继承于UserInfo的属性只使用该用户的基本信息ID、昵称、头像
+    //以下数据均排除了本人
     private String GGroupName;
     private int GGroupID;
     private int GGrouperID[];

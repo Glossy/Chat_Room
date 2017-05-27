@@ -66,7 +66,7 @@ public class ListNameJLabel extends JLabel{
                 }
             });
         }else if(type == 1){//若为群组列表
-            for (int i = 0; i < friends.length; i++) {
+            for (int i = 0; i < friends.length - 1; i++) {
                 friends[i].setVisible(false);
             }
             addMouseListener(new MouseAdapter() {

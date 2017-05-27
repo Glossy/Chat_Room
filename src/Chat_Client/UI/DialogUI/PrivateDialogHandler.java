@@ -1,6 +1,7 @@
 package Chat_Client.UI.DialogUI;
 
 import Chat_Client.DataBase.FigureProperty;
+import Chat_Client.DataBase.GroupDialogDataBase;
 import Chat_Client.DataBase.PrivateDialogDataBase;
 import Chat_Client.DataBase.UserInfo;
 
@@ -67,6 +68,11 @@ public class PrivateDialogHandler {
     //向数据库中注册PrivateDialogUI
     public static void RegisterDialog(int IDNum,PrivateDialogUI dialog){
         PrivateDialogDataBase.dialogDB.put(String.valueOf(IDNum), dialog);
+    }
+
+    //从数据库中删除PrivateDialogUI
+    public static void DeleteDialog(int groupID){
+        GroupDialogDataBase.dialogDB.remove(String.valueOf(groupID));
     }
 
 }
