@@ -1,0 +1,6 @@
+src文件下是工程文件，具体的源码在/src/Chat_Room/src下
+开发环境为IntelliJ IDEA 2017
+若想要运行的话直接用IntelliJ IDEA 2017 open Chat_Room文件夹，未测试用其他IDE能否打开此工程项目
+数据库的文件在/src/Chat_Room/db下
+由于当前群聊功能实现时还报错，项目为实现完私聊功能后的版本
+最新版在https://github.com/Glossy/Chat_Room

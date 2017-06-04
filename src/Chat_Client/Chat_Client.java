@@ -39,6 +39,7 @@ public class Chat_Client extends Thread{
    private static int IDNum;
    private InputStream inputStream;
    private OutputStream outputStream;
+   private int iserverIP;
 
     /**
      * ChatClient的构造函数
@@ -49,6 +50,11 @@ public class Chat_Client extends Thread{
      */
     public Chat_Client(String serverIP,int port){
         this.serverIP = serverIP;
+        this.port = port;
+    }
+
+    public Chat_Client(int iserverIP, int port){
+        this.iserverIP = iserverIP;
         this.port = port;
     }
     /**
@@ -336,6 +342,10 @@ public class Chat_Client extends Thread{
         byte[] sendMsg = MsgHeadWriter.packMessage(msgAddFriend);
         outputStream.write(sendMsg);
         outputStream.flush();
+    }
+
+    public void sendAddGroup(int addGroupID) throws IOException{
+        MsgAddGroup msgAddGroup = new MsgAddGroup();
     }
 
     /**

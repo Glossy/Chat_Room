@@ -1,9 +1,6 @@
 package Chat_Client.UI.CustomizedUI;
 
-import Chat_Client.DataBase.FriendListInfo;
-import Chat_Client.DataBase.GroupDialogDataBase;
-import Chat_Client.DataBase.GroupListInfo;
-import Chat_Client.DataBase.UserInfo;
+import Chat_Client.DataBase.*;
 import Chat_Client.UI.AddGroupUI.AddGroupUI;
 import Chat_Client.UI.GroupDialogUI.GroupDialogHandler;
 import Chat_Client.UI.GroupDialogUI.GroupDialogUI;
@@ -233,7 +230,7 @@ public class ListPane extends JPanel {
             }
             @Override
             public void mouseClicked(MouseEvent e) {//点击则弹出对话框
-                new AddGroupUI();
+                //new AddGroupUI(FigureProperty.mainInterfaceUI,FigureProperty.cc);
 
             }
         });
