@@ -17,9 +17,9 @@ Java Coursework In School
   </p>
 </p>
 <HR style="FILTER: alpha(opacity=100,finishopacity=0,style=3)" width="80%" color=#987cb9 SIZE=3>
-## More details click [Here](https://github.com/Glossy/Chat_Room/blob/master/docs/Java%E4%B8%8A%E6%9C%BA%E6%8A%A5%E5%91%8A.docx)
+# More details click [Here](https://github.com/Glossy/Chat_Room/blob/master/docs/Java%E4%B8%8A%E6%9C%BA%E6%8A%A5%E5%91%8A.docx)
 
 <br>
 <br>
 <br>
-## Back to [Glossy](https://github.com/Glossy)
+# Back to [Glossy](https://github.com/Glossy)
