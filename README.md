@@ -24,6 +24,23 @@ Java Coursework In School
 - More details click [Here](https://github.com/Glossy/Chat_Room/blob/master/docs/Java%E4%B8%8A%E6%9C%BA%E6%8A%A5%E5%91%8A.docx)
 
 <br>
+
+- LoginUI
+   <br>
+   ![image](https://github.com/Glossy/Chat_Room/blob/master/docs/pic/LoginUI.png)
+ 
+- Add & Register UI
+   <br>
+   ![image](https://github.com/Glossy/Chat_Room/blob/master/docs/pic/Add%20%26%20Register.png)
+
+- Friend List UI
+   <br>
+   ![image](https://github.com/Glossy/Chat_Room/blob/master/docs/pic/Friend%20List%20UI.png)
+  
+- Chat Dialog UI
+   <br>
+   ![image](https://github.com/Glossy/Chat_Room/blob/master/docs/pic/Chat%20Dialog.png)
+  
 <br>
 <br>
 
