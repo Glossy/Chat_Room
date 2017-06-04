@@ -23,4 +23,4 @@ More details click [Here](https://github.com/Glossy/Chat_Room/blob/master/docs/J
 <br>
 <br>
 <br>
-## Back to [Glossy](https://github.com/Glossy)
+Back to [Glossy](https://github.com/Glossy)
